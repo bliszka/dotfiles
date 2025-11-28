@@ -14,6 +14,9 @@ return {
           ".env*",
         },
       },
+      follow_current_file = {
+        leave_dirs_open = true,
+      },
     },
   },
 }
