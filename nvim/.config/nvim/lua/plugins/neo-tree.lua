@@ -12,6 +12,7 @@ return {
         },
         always_show_by_pattern = {
           ".env*",
+          ".phpcs*",
         },
       },
       follow_current_file = {
