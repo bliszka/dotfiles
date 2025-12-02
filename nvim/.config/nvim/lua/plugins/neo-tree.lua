@@ -13,6 +13,10 @@ return {
         always_show_by_pattern = {
           ".env*",
           ".phpcs*",
+          ".php-cs-fixer*.php",
+        },
+        hide_by_pattern = {
+          ".php-cs-fixer.cache",
         },
       },
       follow_current_file = {
