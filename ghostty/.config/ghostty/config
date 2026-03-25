@@ -1,0 +1,91 @@
+# Dynamic theme colors
+# config-file = ?"~/.config/omarchy/current/theme/ghostty.conf"
+
+# background = #1a1b26
+# foreground = #cdd6f4
+# cursor-color = #c0caf5
+# selection-background = #33467c
+# selection-foreground = #e6e9ff
+# palette = 0=#2f3549
+# palette = 1=#c94f6d
+# palette = 2=#9ece6a
+# palette = 3=#e0af68
+# palette = 4=#7aa2f7
+# palette = 5=#bb9af7
+# palette = 6=#2ac3de
+# palette = 7=#c0caf5
+# palette = 8=#444b6a
+# palette = 9=#f7768e
+# palette = 10=#b9f27c
+# palette = 11=#ffb86c
+# palette = 12=#8db0ff
+# palette = 13=#caa9fa
+# palette = 14=#44d1f0
+# palette = 15=#e6e9ff
+
+# theme = Kanagawa Dragon
+# theme = TokyoNight Night
+# theme = TokyoNight
+
+
+theme = Catppuccin Mocha
+palette = 1=#c94f6d
+palette = 9=#f7768e
+
+# Font
+# font-family = SF Mono          # poprzednie
+# font-family = JetBrainsMono Nerd Font  # poprzednie
+# font-family = Hack Nerd Font
+# font-family = DejaVu Sans Mono
+
+# font-style = Regular            # poprzednie
+# font-style-bold = Bold          # poprzednie
+# font-style-italic = Italic      # poprzednie
+# font-style-bold-italic = Bold Italic  # poprzednie
+# font-size = 11                  # poprzednie
+# adjust-cell-height = 10%        # poprzednie
+# adjust-cell-width = +4%         # poprzednie
+
+# macOS-like (SF Mono, 34" 3440x1440)
+font-family = SF Mono
+font-style = Regular
+font-style-bold = Bold
+font-style-italic = Italic
+font-style-bold-italic = Bold Italic
+font-size = 12
+adjust-cell-height = 15%
+
+background-opacity = 0.9
+
+
+# Window
+window-decoration = server
+# window-padding-x = 0           # poprzednie
+# window-padding-y = 0           # poprzednie
+# window-padding-x = 5           # poprzednie
+# window-padding-y = 10          # poprzednie
+window-padding-x = 10
+window-padding-y = 8
+confirm-close-surface=false
+resize-overlay = never
+
+# Cursor styling
+cursor-style = "block"
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+# Keyboard bindings
+keybind = f11=toggle_fullscreen
+keybind = shift+insert=paste_from_clipboard
+keybind = control+insert=copy_to_clipboard
+keybind = super+control+shift+alt+arrow_down=resize_split:down,100
+keybind = super+control+shift+alt+arrow_up=resize_split:up,100
+keybind = super+control+shift+alt+arrow_left=resize_split:left,100
+keybind = super+control+shift+alt+arrow_right=resize_split:right,100
+keybind = shift+enter=text:\x1b\r
+
+# Slowdown mouse scrolling
+mouse-scroll-multiplier = 0.95
+
+# Fix general slowness on hyprland (https://github.com/ghostty-org/ghostty/discussions/3224)
+async-backend = epoll
