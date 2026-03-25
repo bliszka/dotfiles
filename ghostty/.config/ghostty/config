@@ -54,6 +54,8 @@ font-style-italic = Italic
 font-style-bold-italic = Bold Italic
 font-size = 12
 adjust-cell-height = 15%
+# freetype-load-flags = hinting,no-autohint
+freetype-load-flags = no-hinting
 
 background-opacity = 0.9
 
