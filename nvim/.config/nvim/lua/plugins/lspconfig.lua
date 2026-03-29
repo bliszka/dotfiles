@@ -28,17 +28,6 @@ return {
     servers = {
       intelephense = {
         enabled = true,
-        -- on_attach = function(client, bufnr)
-        --   if client.supports_method("textDocument/codeLens") then
-        --     vim.lsp.codelens.refresh({ bufnr = bufnr })
-        --     vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-        --       buffer = bufnr,
-        --       callback = function()
-        --         vim.lsp.codelens.refresh({ bufnr = bufnr })
-        --       end,
-        --     })
-        --   end
-        -- end,
         init_options = {
           licenceKey = licence_key,
         },
