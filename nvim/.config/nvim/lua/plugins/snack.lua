@@ -7,7 +7,8 @@ return {
     picker = {
       sources = {
         lines = {
-          layout = "dropdown",
+          -- layout = "dropdown",
+          layout = "ivy",
         },
       },
     },

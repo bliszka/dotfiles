@@ -69,6 +69,8 @@ return {
           client.server_capabilities.documentFormattingProvider = false
           client.server_capabilities.documentRangeFormattingProvider = false
           client.server_capabilities.signatureHelpProvider = false
+
+          vim.diagnostic.enable(false, { ns_id = vim.lsp.diagnostic.get_namespace(client.id) })
         end,
       },
     },
