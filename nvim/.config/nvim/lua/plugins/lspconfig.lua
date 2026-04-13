@@ -1,4 +1,9 @@
-local licence_key = vim.fn.readfile(os.getenv("INTELEPHENSE_LICENSE_KEY"))[1]
+local license_path = os.getenv("INTELEPHENSE_LICENSE_KEY") or ""
+local licence_key = ""
+
+if vim.fn.filereadable(license_path) == 1 then
+  licence_key = vim.fn.readfile(license_path)[1]
+end
 
 return {
   "neovim/nvim-lspconfig",
@@ -61,7 +66,14 @@ return {
 
       phpactor = {
         enabled = true,
-        on_attach = function(client, bufnr)
+        settings = {
+          ["phpactor.diagnostics.enable"] = false,
+        },
+        handlers = {
+          -- Overwrite phpactor diagnostic to do nothing. The intelephense diagnostic is prefered
+          ["textDocument/publishDiagnostics"] = function() end,
+        },
+        on_attach = function(client)
           client.server_capabilities.definitionProvider = false
           client.server_capabilities.referencesProvider = false
           client.server_capabilities.hoverProvider = false
@@ -69,8 +81,7 @@ return {
           client.server_capabilities.documentFormattingProvider = false
           client.server_capabilities.documentRangeFormattingProvider = false
           client.server_capabilities.signatureHelpProvider = false
-
-          vim.diagnostic.enable(false, { ns_id = vim.lsp.diagnostic.get_namespace(client.id) })
+          client.server_capabilities.documentSymbolProvider = false
         end,
       },
     },
