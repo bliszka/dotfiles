@@ -30,3 +30,4 @@ vim.keymap.set(
   "i<CR><Esc>",
   { noremap = true, silent = true, desc = "Insert line below without moving cursor" }
 )
+vim.keymap.set("n", "<leader>>", "/-><CR>", { noremap = true, silent = true, desc = "Go to the next ->" })

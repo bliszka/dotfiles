@@ -23,6 +23,7 @@ return {
       "phpdoc",
       "lua",
       "twig",
+      "sql",
     })
   end,
 }

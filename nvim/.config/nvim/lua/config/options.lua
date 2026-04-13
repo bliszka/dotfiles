@@ -9,3 +9,4 @@ vim.diagnostic.config({
     border = "rounded",
   },
 })
+vim.opt.equalalways = false
