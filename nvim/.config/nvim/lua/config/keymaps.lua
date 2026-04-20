@@ -31,3 +31,9 @@ vim.keymap.set(
   { noremap = true, silent = true, desc = "Insert line below without moving cursor" }
 )
 vim.keymap.set("n", "<leader>>", "/-><CR>", { noremap = true, silent = true, desc = "Go to the next ->" })
+vim.keymap.set(
+  "n",
+  "<leader>wr",
+  "<cmd>vertical resize 180<CR>",
+  { noremap = true, silent = true, desc = "Resize window verticaly to 180 length" }
+)
