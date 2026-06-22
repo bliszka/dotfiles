@@ -13,7 +13,6 @@ return {
       "phpcs",
       "eslint_d",
       "prettier",
-      "xmlformatter",
     },
     post_install_hooks = {
       function()
