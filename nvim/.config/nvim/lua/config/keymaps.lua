@@ -33,7 +33,15 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>>", "/-><CR>", { noremap = true, silent = true, desc = "Go to the next ->" })
 vim.keymap.set(
   "n",
-  "<leader>wr",
+  "<leader>wrr",
   "<cmd>vertical resize 180<CR>",
   { noremap = true, silent = true, desc = "Resize window verticaly to 180 length" }
 )
+vim.keymap.set(
+  "n",
+  "<leader>wrx",
+  "<C-W>x<cmd>vertical resize 180<CR>",
+  { noremap = true, silent = true, desc = "Swap current with next and resize window vertical to 180 length" }
+)
+
+vim.keymap.set("n", "<leader>su", "<cmd>FzfLua undotree<cr>", { desc = "Display undotree" })

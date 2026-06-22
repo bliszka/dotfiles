@@ -31,6 +31,20 @@ return {
       enabled = false,
     },
     servers = {
+      yamlls = {
+        settings = {
+          yaml = {
+            customTags = {
+              "!tagged_iterator scalar",
+              "!tagged_locator scalar",
+              "!returns_clone scalar",
+              "!service mapping",
+              "!abstract scalar",
+              "!php/const scalar",
+            },
+          },
+        },
+      },
       intelephense = {
         enabled = true,
         init_options = {
