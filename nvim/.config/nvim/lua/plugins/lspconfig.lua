@@ -31,6 +31,17 @@ return {
       enabled = false,
     },
     servers = {
+      vtsls = {
+        settings = {
+          typescript = {
+            preferences = {
+              -- Rename from an importing file renames the original symbol instead of
+              -- creating a local alias (`import { foo as bar }`). Copied to javascript by LazyVim.
+              useAliasesForRenames = false,
+            },
+          },
+        },
+      },
       yamlls = {
         settings = {
           yaml = {
