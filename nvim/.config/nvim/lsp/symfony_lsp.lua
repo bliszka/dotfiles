@@ -32,6 +32,11 @@ return {
   settings = {
     symfonyLsp = {},
   },
+  on_init = function(client)
+    -- Leave rename to intelephense: inc-rename aborts when any server errors on prepareRename
+    -- and sends the rename only to the first capable client, which could be symfony_lsp
+    client.server_capabilities.renameProvider = false
+  end,
   commands = {
     ["editor.action.showReferences"] = function(command, ctx)
       local client = assert(vim.lsp.get_client_by_id(ctx.client_id))
