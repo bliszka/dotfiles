@@ -6,9 +6,9 @@ return {
     },
     picker = {
       sources = {
-        lines = {
-          -- layout = "dropdown",
-          layout = "ivy",
+        explorer = {
+          follow_file = false,
+          auto_close = false,
         },
       },
     },
