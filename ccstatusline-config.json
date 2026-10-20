@@ -1,0 +1,77 @@
+{
+  "version": 4,
+  "lines": [
+    [
+      {
+        "id": "1",
+        "type": "model",
+        "color": "cyan"
+      },
+      {
+        "id": "3",
+        "type": "context-length",
+        "color": "white",
+        "bold": true
+      },
+      {
+        "id": "5",
+        "type": "git-branch",
+        "color": "magenta"
+      },
+      {
+        "id": "7",
+        "type": "git-changes",
+        "color": "yellow"
+      },
+      {
+        "id": "4f4ece1d-8def-412d-8724-ef0315532e84",
+        "type": "reset-timer",
+        "backgroundColor": "bgBrightRed"
+      },
+      {
+        "id": "fc00b348-591d-4421-ace0-01eb8ef1d136",
+        "type": "session-usage",
+        "backgroundColor": "bgMagenta"
+      },
+      {
+        "id": "1fb4ba2a-d578-439d-85d3-d32a70789283",
+        "type": "weekly-usage",
+        "backgroundColor": "bgGreen"
+      }
+    ],
+    [],
+    []
+  ],
+  "flexMode": "full",
+  "compactThreshold": 60,
+  "colorLevel": 2,
+  "defaultPadding": " ",
+  "defaultPaddingSide": "both",
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "gitCacheTtlSeconds": 5,
+  "terminalWidthCacheTtlSeconds": 5,
+  "customCommandCacheTtlSeconds": 0,
+  "minimalistMode": false,
+  "powerline": {
+    "enabled": true,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [],
+    "endCaps": [
+      ""
+    ],
+    "theme": "nord-aurora",
+    "autoAlign": false,
+    "continueThemeAcrossLines": false
+  },
+  "installation": {
+    "method": "pinned",
+    "installedVersion": "2.2.32"
+  },
+  "exportedBy": "2.2.32"
+}
