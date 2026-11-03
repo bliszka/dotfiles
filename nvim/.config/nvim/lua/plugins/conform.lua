@@ -15,6 +15,7 @@ return {
     opts.formatters_by_ft = opts.formatters_by_ft or {}
     opts.formatters_by_ft.xml = { lsp_format = "prefer" }
     opts.formatters_by_ft.php = { "php_cs_fixer" }
+    opts.formatters_by_ft.yaml = { "prettier" }
 
     -- oxfmt tylko w projektach z .oxfmtrc.json; gdzie indziej zostają formattery z LazyVim
     for _, ft in ipairs(oxfmt_filetypes) do
