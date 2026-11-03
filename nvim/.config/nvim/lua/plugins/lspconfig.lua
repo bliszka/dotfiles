@@ -130,6 +130,19 @@ return {
           },
         },
       },
+      -- twiggy loads the Twig namespaces (@Bundle/...) from `debug:twig` only after it gets
+      -- settings, and nvim sends settings only when they are not empty. The framework is
+      -- guessed from composer.json. A project can override phpExecutable in its .lazy.lua.
+      twiggy_language_server = {
+        settings = {
+          twiggy = {
+            phpExecutable = "php",
+            symfonyConsolePath = "bin/console",
+            -- twiggy reads this key without a nil check, so it must exist
+            diagnostics = { twigCsFixer = false },
+          },
+        },
+      },
       intelephense = {
         enabled = true,
         init_options = {
@@ -151,6 +164,11 @@ return {
             format = {
               enable = false,
             },
+            -- Diagnostics are left to phpstan (nvim-lint). Intelephense ignores phpstan generics/templates
+            -- (e.g. valinor mapper returns) and reports false type errors.
+            diagnostics = {
+              enable = false,
+            },
             codeLens = {
               references = {
                 enable = true,
@@ -169,7 +187,7 @@ return {
           ["phpactor.diagnostics.enable"] = false,
         },
         handlers = {
-          -- Overwrite phpactor diagnostic to do nothing. The intelephense diagnostic is prefered
+          -- Overwrite phpactor diagnostic to do nothing. PHP diagnostics come from phpstan
           ["textDocument/publishDiagnostics"] = function() end,
         },
         on_attach = function(client)
