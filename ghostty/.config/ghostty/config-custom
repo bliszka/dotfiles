@@ -1,0 +1,22 @@
+# My Ghostty settings. They override ~/.config/ghostty/config, which stays the
+# Omarchy default so updates and migrations can change it freely.
+#
+# This file lives in ~/dotfiles (stow package "ghostty"). Ghostty loads it
+# through one line at the end of ~/.config/ghostty/config:
+#   config-file = ?"~/.config/ghostty/config-custom"
+# Included files load after the main file, so values here win.
+# If a refresh resets the main config, add that line again.
+
+# Pixel grid: JetBrains Mono advance = 0.6 em, Ghostty on Linux uses 96 DPI (1 pt = 4/3 px).
+# 11.25 pt = 15 px -> glyph 9.0 px = cell 9 px (no rounding), line 20 px.
+# Glyph width = pt * 0.8 px, exact for multiples of 1.25 pt (8.75 / 10 / 11.25 / 12.5).
+font-size = 11.25
+
+# Edge to edge: no padding, first cell touches the top-left window edge.
+# The window is rarely a multiple of the 9x20 cell, so a few px remain at the
+# right/bottom (full window 3416x1390 -> grid 379x69, 5 px right, 10 px bottom).
+# Padding is in points (1 pt = 4/3 px, rounded down) and applies to new windows only.
+window-padding-x = 0
+window-padding-y = 0
+# Paint that remainder with the color of the nearest cell, so it blends in.
+window-padding-color = extend
