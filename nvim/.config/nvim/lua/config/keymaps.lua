@@ -23,12 +23,14 @@ function EscapePair()
   end
 end
 
-vim.api.nvim_set_keymap(
-  "n",
-  "<leader>r",
-  '<cmd>lua require("snacks").explorer.reveal()<CR>',
-  { noremap = true, silent = true }
-)
+-- Reveal the current file in the Snacks explorer. Off while testing neo-tree:
+-- there <leader>e already opens the tree on the current file.
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<leader>r",
+--   '<cmd>lua require("snacks").explorer.reveal()<CR>',
+--   { noremap = true, silent = true }
+-- )
 vim.api.nvim_set_keymap("i", "<A-l>", "<cmd>lua EscapePair()<CR>", { noremap = true, silent = true })
 vim.keymap.set(
   "n",
