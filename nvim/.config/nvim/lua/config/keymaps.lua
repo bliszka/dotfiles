@@ -23,6 +23,12 @@ function EscapePair()
   end
 end
 
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>r",
+  '<cmd>lua require("snacks").explorer.reveal()<CR>',
+  { noremap = true, silent = true }
+)
 vim.api.nvim_set_keymap("i", "<A-l>", "<cmd>lua EscapePair()<CR>", { noremap = true, silent = true })
 vim.keymap.set(
   "n",
@@ -45,3 +51,17 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<leader>su", "<cmd>FzfLua undotree<cr>", { desc = "Display undotree" })
+
+vim.keymap.set("n", "<leader>bW", function()
+  Snacks.bufdelete({
+    wipe = true,
+    filter = function(buf)
+      local name = vim.api.nvim_buf_get_name(buf)
+      return vim.bo[buf].buflisted
+        and vim.bo[buf].buftype == ""
+        and name ~= ""
+        and not vim.bo[buf].modified
+        and not vim.uv.fs_stat(name)
+    end,
+  })
+end, { desc = "Wipe Buffers Without File" })
