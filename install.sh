@@ -44,6 +44,10 @@ SHELL_PLUGINS=(
 # Ultrawide background pack for the monitor (3440x1440 = 21x9).
 ULTRAWIDE_RATIO="21x9"
 
+# System monospace font (the Omarchy default). The Omarchy menu
+# Install > Style > Font switches every terminal and the bar to another font.
+FONT="JetBrainsMono Nerd Font"
+
 # Theme and background. The background file comes from the ultrawide pack.
 THEME="catppuccin"
 BACKGROUND="$HOME/.config/omarchy/backgrounds/catppuccin/winding-road.jpg"
@@ -256,6 +260,30 @@ elif [[ -f $BACKGROUND ]]; then
   omarchy theme bg set "$BACKGROUND" >/dev/null && done_ "background $(basename "$BACKGROUND") set"
 else
   warn "$(short "$BACKGROUND") not found - install the ultrawide pack first"
+fi
+
+# System font: the font fontconfig gives for "monospace" (bar, Qt apps) and
+# the font Ghostty really uses (after config-custom).
+mono_font="$(fc-match monospace family 2>/dev/null | cut -d, -f1)"
+ghostty_font="$(ghostty +show-config 2>/dev/null | sed -n 's/^font-family = //p' | head -1)"
+if [[ $mono_font == "$FONT" && $ghostty_font == "$FONT" ]]; then
+  ok "font $FONT"
+elif $CHECK; then
+  todo "font $FONT (now: monospace=$mono_font, Ghostty=$ghostty_font)"
+else
+  omarchy font set "$FONT" >/dev/null 2>&1
+  # `omarchy font set` also writes ~/.config/fontconfig/fonts.conf. When
+  # Omarchy's own default already gives $FONT, drop that override file.
+  fc_user="$HOME/.config/fontconfig/fonts.conf"
+  if [[ -f $fc_user ]]; then
+    mv "$fc_user" "$fc_user.off"
+    if [[ $(fc-match monospace family | cut -d, -f1) == "$FONT" ]]; then
+      rm -f "$fc_user.off"
+    else
+      mv "$fc_user.off" "$fc_user"
+    fi
+  fi
+  done_ "font $FONT set (terminals and bar)"
 fi
 
 # --- 6. tmux plugins (TPM) ----------------------------------------------------
