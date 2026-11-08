@@ -31,6 +31,23 @@ if [[ $DOTFILES != "$HOME/dotfiles" ]]; then
   exit 1
 fi
 
+# --- My choices (edit here) -------------------------------------------------
+
+# Packages from the Arch and Omarchy repositories.
+PACKAGES=(stow git superwhisper-bin)
+
+# Omarchy shell plugins installed from git: "<plugin-id> <git-url>".
+SHELL_PLUGINS=(
+  "io.github.johnsideserf.ultrawide-background https://github.com/johnsideserf/omarchy-ultrawide-background"
+)
+
+# Ultrawide background pack for the monitor (3440x1440 = 21x9).
+ULTRAWIDE_RATIO="21x9"
+
+# Theme and background. The background file comes from the ultrawide pack.
+THEME="catppuccin"
+BACKGROUND="$HOME/.config/omarchy/backgrounds/catppuccin/winding-road.jpg"
+
 # --- Helpers ----------------------------------------------------------------
 
 ok()    { printf '  \e[32mok\e[0m      %s\n' "$*"; }
@@ -83,7 +100,7 @@ ensure_include() {
 # --- 1. Packages ------------------------------------------------------------
 
 step "1. Packages"
-for pkg in stow git; do
+for pkg in "${PACKAGES[@]}"; do
   if pacman -Q "$pkg" &>/dev/null; then ok "$pkg"
   elif $CHECK; then todo "$pkg"
   else omarchy pkg add "$pkg" && done_ "$pkg installed"
@@ -167,9 +184,83 @@ else
   done_ "~/.config/nvim linked to dotfiles/nvim"
 fi
 
-# --- 5. tmux plugins (TPM) ----------------------------------------------------
+# --- 5. Omarchy shell plugins, theme and background ---------------------------
 
-step "5. tmux plugins"
+step "5. Omarchy shell plugins, theme and background"
+shell_json="$HOME/.config/omarchy/shell.json"
+plugin_dir="$HOME/.config/omarchy/plugins"
+
+# Is plugin <id> on the enabled list in shell.json?
+plugin_enabled() {
+  jq -e --arg id "$1" '(.plugins // []) | map(.id) | index($id) != null' "$shell_json" &>/dev/null
+}
+
+for entry in "${SHELL_PLUGINS[@]}"; do
+  read -r id url <<<"$entry"
+  if [[ -d $plugin_dir/$id ]] && plugin_enabled "$id"; then
+    ok "plugin $id"
+  elif $CHECK; then
+    todo "plugin $id (installed and enabled)"
+  elif [[ -d $plugin_dir/$id ]]; then
+    omarchy plugin enable "$id" >/dev/null && done_ "plugin $id enabled"
+  else
+    omarchy plugin add "$url" --enable --yes >/dev/null && done_ "plugin $id installed and enabled"
+  fi
+done
+
+# Ultrawide background pack (images, ~550 MB download on the first install).
+uw_cli="$plugin_dir/io.github.johnsideserf.ultrawide-background/bin/omarchy-ultrawide"
+if [[ -x $uw_cli ]]; then
+  # Read the whole output first: `| grep -q` would stop early, the CLI would get
+  # SIGPIPE and pipefail would turn a match into a failure.
+  uw_status="$("$uw_cli" status 2>/dev/null || true)"
+  if [[ $uw_status == *"ratio=$ULTRAWIDE_RATIO "* || $uw_status == *"ratio=$ULTRAWIDE_RATIO"$'\n'* ]]; then
+    ok "ultrawide background pack $ULTRAWIDE_RATIO"
+  elif $CHECK; then
+    todo "ultrawide background pack $ULTRAWIDE_RATIO"
+  else
+    "$(dirname "$uw_cli")/../install.sh" "$ULTRAWIDE_RATIO" >/dev/null &&
+      done_ "ultrawide background pack $ULTRAWIDE_RATIO installed"
+  fi
+elif ! $CHECK; then
+  warn "ultrawide plugin is missing - background pack skipped"
+fi
+
+# Superwhisper bar panel. Superwhisper links its panel plugin on first start.
+if jq -e '[.bar.layout[]?[]?.id] | index("superwhisper.panel") != null' "$shell_json" &>/dev/null; then
+  ok "Superwhisper panel in the bar"
+elif $CHECK; then
+  todo "Superwhisper panel in the bar"
+elif [[ -e $plugin_dir/superwhisper-panel ]]; then
+  omarchy bar put superwhisper.panel --after omarchy.tray >/dev/null && done_ "Superwhisper panel added to the bar"
+else
+  warn "start Superwhisper once (it adds its bar plugin), then run this script again"
+fi
+
+# Theme, then background (applying a theme resets the background).
+current_theme="$(cat "$HOME/.local/state/omarchy/current/theme.name" 2>/dev/null || true)"
+if [[ $current_theme == "$THEME" ]]; then
+  ok "theme $THEME"
+elif $CHECK; then
+  todo "theme $THEME (now: ${current_theme:-none})"
+else
+  omarchy theme set "$THEME" >/dev/null && done_ "theme $THEME applied"
+fi
+
+current_bg="$(readlink -f "$HOME/.local/state/omarchy/current/background" 2>/dev/null || true)"
+if [[ $current_bg == "$(readlink -f "$BACKGROUND")" ]]; then
+  ok "background $(basename "$BACKGROUND")"
+elif $CHECK; then
+  todo "background $(basename "$BACKGROUND") (now: $(basename "${current_bg:-none}"))"
+elif [[ -f $BACKGROUND ]]; then
+  omarchy theme bg set "$BACKGROUND" >/dev/null && done_ "background $(basename "$BACKGROUND") set"
+else
+  warn "$(short "$BACKGROUND") not found - install the ultrawide pack first"
+fi
+
+# --- 6. tmux plugins (TPM) ----------------------------------------------------
+
+step "6. tmux plugins"
 tpm="$HOME/.config/tmux/plugins/tpm"
 if [[ -d $tpm ]]; then
   ok "TPM"
@@ -187,19 +278,19 @@ if ! $CHECK && [[ -x $tpm/bin/install_plugins ]]; then
   fi
 fi
 
-# --- 6. Files kept out of git -----------------------------------------------
+# --- 7. Files kept out of git -----------------------------------------------
 
-step "6. Files kept out of git"
+step "7. Files kept out of git"
 if [[ -f $DOTFILES/vault/intelephense-license.txt ]]; then
   ok "vault/intelephense-license.txt"
 else
   warn "vault/intelephense-license.txt is missing - copy it from a backup"
 fi
 
-# --- 7. Reload ----------------------------------------------------------------
+# --- 8. Reload ----------------------------------------------------------------
 
 if ! $CHECK; then
-  step "7. Reload"
+  step "8. Reload"
   if command -v hyprctl &>/dev/null && hyprctl version &>/dev/null; then
     hyprctl reload >/dev/null
     errors="$(hyprctl configerrors 2>/dev/null || true)"
