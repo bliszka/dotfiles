@@ -27,6 +27,14 @@ hl.monitor({
 -- Monitor scale is 1, so keep GTK at 1. Restart an app for a change to apply.
 hl.env("GDK_SCALE", "1")
 
+-- Keyboard --------------------------------------------------------------------
+-- Toggle dictation with Super+Ctrl+X ("ctrl+opt+x" on my keyboard) - the
+-- binding from before Omarchy 4.5 made Alt+Space the default. I use this one.
+-- F9 push-to-talk from the same old block is not used, so it stays out.
+if o.dictation_installed and o.dictation_installed() then
+  o.bind("SUPER + CTRL + X", "Toggle dictation", "omarchy-dictation toggle")
+end
+
 -- Windows ---------------------------------------------------------------------
 -- Active windows fully opaque, inactive 0.98. Overrides Omarchy's "0.985 0.96",
 -- which let a light wallpaper show through Ghostty.
