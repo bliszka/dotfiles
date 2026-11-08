@@ -35,7 +35,19 @@ if o.dictation_installed and o.dictation_installed() then
   o.bind("SUPER + CTRL + X", "Toggle dictation", "omarchy-dictation toggle")
 end
 
+-- Layout ----------------------------------------------------------------------
+-- A lone window on the ultrawide stays centered at 16:9 instead of spanning
+-- the full 3440 px width.
+hl.config({
+  layout = {
+    single_window_aspect_ratio = { 16, 9 },
+  },
+})
+
 -- Windows ---------------------------------------------------------------------
 -- Active windows fully opaque, inactive 0.98. Overrides Omarchy's "0.985 0.96",
 -- which let a light wallpaper show through Ghostty.
 o.window(".*", { opacity = "1 0.98" })
+
+-- These apps always open fullscreen (Ghostty grid at fullscreen: 382x72 cells).
+o.window("^(com\\.mitchellh\\.ghostty|kitty|TradingView)$", { fullscreen = true })
