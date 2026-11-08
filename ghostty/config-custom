@@ -1,11 +1,11 @@
 # My Ghostty settings. They override ~/.config/ghostty/config, which stays the
 # Omarchy default so updates and migrations can change it freely.
 #
-# This file lives in ~/dotfiles (stow package "ghostty"). Ghostty loads it
-# through one line at the end of ~/.config/ghostty/config:
-#   config-file = ?"~/.config/ghostty/config-custom"
+# This file lives in ~/dotfiles. Ghostty loads it through one line at the end
+# of ~/.config/ghostty/config (install.sh adds it):
+#   config-file = ?"~/dotfiles/ghostty/config-custom"
 # Included files load after the main file, so values here win.
-# If a refresh resets the main config, add that line again.
+# If a refresh resets the main config, run ~/dotfiles/install.sh again.
 
 # Pixel grid: JetBrains Mono advance = 0.6 em, Ghostty on Linux uses 96 DPI (1 pt = 4/3 px).
 # 11.25 pt = 15 px -> glyph 9.0 px = cell 9 px (no rounding), line 20 px.

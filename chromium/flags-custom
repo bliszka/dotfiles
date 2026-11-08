@@ -1,0 +1,10 @@
+# My Chromium flags. install.sh appends each line that is missing to
+# ~/.config/chromium-flags.conf (Omarchy's file). Comment lines are skipped.
+
+# Google account sign-in and Sync: Google Chrome's public OAuth client,
+# widely published (Arch Wiki, Stack Overflow). Google may block it one day.
+--oauth2-client-id=77185425430.apps.googleusercontent.com
+--oauth2-client-secret=OTJgUOQcT7lO7GsGZq2G4IlT
+
+# Needed by Superwhisper dictation to read and type into web pages.
+--force-renderer-accessibility

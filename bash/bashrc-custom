@@ -1,0 +1,18 @@
+# My bash settings on top of Omarchy's ~/.bashrc (interactive shells only).
+#
+# This file lives in ~/dotfiles. ~/.bashrc loads it with one line at its end
+# (install.sh adds it):
+#   [[ -f ~/dotfiles/bash/bashrc-custom ]] && source ~/dotfiles/bash/bashrc-custom
+
+# Restore XDG/Wayland variables after working over SSH: run `fix_xdg`.
+source ~/dotfiles/bash/fix_xdg.sh
+
+# Intelephense license for Neovim (file kept out of git in ~/dotfiles/vault).
+export INTELEPHENSE_LICENSE_KEY="$HOME/dotfiles/vault/intelephense-license.txt"
+
+export PATH="$HOME/.config/composer/vendor/bin:$PATH"
+
+alias y='yazi'
+alias tmw='tmuxp load work'
+
+fastfetch
